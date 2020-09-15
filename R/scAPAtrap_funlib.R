@@ -497,20 +497,3 @@ generatescExpMa <- function(countsfile, peaksfile, barcode, tails,d,min.cells = 
 
     return(scExpMa)
 }
-
-
-#-----------------------------------Pipeline----------------------------------------------
-# config文件
-tenxPipeline <- function(input.bam, barcode,config){
-    stat_time <- Sys.time()
-    message(paste0(stat_time,'::','程序开始运行...'))
-    findUniqueMap()
-
-
-}
-
-
-scRNAseqPipeline <- function(input,barcode,isseq){
-
-
-}
