@@ -1,0 +1,36 @@
+Package: scAPAtrap
+Type: Package
+Title: Identification and Quantification of Alternative Polyadenylation Sites from Single-cell RNA-seq Data
+Version: 0.1.0
+Author: Tao Liu
+Maintainer: Tao Liu <liwen199527@163.com>
+Description: Identification and Quantification of Alternative Polyadenylation Sites from Single-cell RNA-seq data
+    scAPAtrap
+Depends: 
+    R (>= 3.5.3),
+    dplyr,
+    reshape2,
+    GenomicRanges,
+    GenomicAlignments,
+    derfinder,
+    bumphunter,
+    regioneR,
+    Rsamtools
+License: GPL
+Encoding: UTF-8
+LazyData: true
+Date: 2020-07-25
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    reshape2,
+    GenomicRanges,
+    GenomicAlignments,
+    derfinder,
+    bumphunter,
+    regioneR,
+    Rsamtools
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
