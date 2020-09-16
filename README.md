@@ -33,6 +33,8 @@ Three main datasets used in this study:
 * Arabidopsis roots ([GSE123013](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE123013))
 * Mouse intestinal organoids ([GSE62270](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE62270))
 
+Lists of poly(A) sites with full genome annotation identified by scAPAtrap were placed in the ([Result](https://github.com/BMILAB/scAPAtrap/tree/master/Result)) folder.
+
 ## Installing
 ```
 install.packages('devtools')
