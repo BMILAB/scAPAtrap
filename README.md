@@ -25,7 +25,7 @@ conda install star -c bioconda
 ```
 ### R packages
 Please install the following R packages:
-``GenomicRanges`` ``GenomicAliments`` ``dplyr`` ``derfinder`` ``regionR``
+``GenomicRanges`` ``GenomicAlignments`` ``dplyr`` ``derfinder`` ``regionR``
 
 ### Data
 Three main datasets used in this study:
