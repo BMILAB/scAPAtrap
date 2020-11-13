@@ -61,4 +61,4 @@ Here we adopted the mouse sperm scRNA-seq dataset to evaluate the performance of
 We analyzed dynamic APA usage during sperm cell differentiation based on poly(A) sites identified by scAPAtrap. Please refer to the vignette ([scAPAtrap_DE.html](http://www.bmibig.cn/mnt/scAPAtrap/Tutorial/scAPAtrap_DE.html)) for full details.
 
 ## Citation
-If you are using scAPAtrap, please cite: Xiaohui Wu*, Tao Liu, Congting Ye, Wenbin Ye, Guoli Ji: scAPAtrap: identification and quantification of alternative polyadenylation sites from single-cell RNA-seq data (under review).
+If you are using scAPAtrap, please cite: [Xiaohui Wu*, Tao Liu, Congting Ye, Wenbin Ye, Guoli Ji: scAPAtrap: identification and quantification of alternative polyadenylation sites from single-cell RNA-seq data, Briefings in Bioinformatics, 2020.](https://pubmed.ncbi.nlm.nih.gov/33142319/)
