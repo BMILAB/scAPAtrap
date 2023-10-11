@@ -1,0 +1,169 @@
+LOG file = /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.APA.notails.onestep.log
+################################################################################
+2023-09-13 15:45:02 initiate scAPAtrap
+################################################################################
+inputBam = /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.bam
+outputDir = /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep
+samtools = /home/dell/miniconda3/envs/scAPA/bin/samtools
+umitools = /home/dell/miniconda3/envs/scAPA/bin/umi_tools
+featureCounts = /home/dell/miniconda3/envs/scAPA/bin/featureCounts
+star = /home/dell/miniconda3/envs/scAPA/bin/STAR
+TenX = TRUE
+barcode = ACAGAC,ACAGGA,ACAGTG... (96 barcodes)
+chrs = 2L,2R,3L,3R,4,X,Y (7 chrs)
+maxwidth = 1000
+readlength = 49
+cov.cutoff = 10
+min.cells = 10
+min.count = 10
+tails.search = no
+d = 100
+findUniqueMap = TRUE
+findUniqueMap.sort = TRUE
+findUniqueMap.index = TRUE
+thread = 24
+################################################################################
+2023-09-13 15:45:02 findUniqueMap
+################################################################################
+>>> 2023-09-13 15:45:02 findUniqueMap: start.
+... 2023-09-13 15:45:02 findUniqueMap: /home/dell/miniconda3/envs/scAPA/bin/samtools view -@ 24 -h -F 256 -bS /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.bam > /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.Uniq.bam
+... 2023-09-13 15:45:04 findUniqueMap: command done.
+... 2023-09-13 15:45:04 findUniqueMap: /home/dell/miniconda3/envs/scAPA/bin/samtools sort -@ 24 -o /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.bam /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.Uniq.bam
+... 2023-09-13 15:45:07 findUniqueMap: command done.
+... 2023-09-13 15:45:07 findUniqueMap: /home/dell/miniconda3/envs/scAPA/bin/samtools index -@ 24 /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.bam
+... 2023-09-13 15:45:08 findUniqueMap: command done.
+>>> 2023-09-13 15:45:08 findUniqueMap: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+inputBam.u='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.bam'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:45:08 dedupByPos
+################################################################################
+>>> 2023-09-13 15:45:08 dedupByPos: start.
+... 2023-09-13 15:45:08 dedupByPos: /home/dell/miniconda3/envs/scAPA/bin/umi_tools dedup -I /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.bam -S /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.bam --method=unique --extract-umi-method=tag --umi-tag=UB --cell-tag=CB
+... 2023-09-13 15:45:51 dedupByPos: command done.
+>>> 2023-09-13 15:45:51 dedupByPos: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+inputBam.u.dedup='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.bam'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:45:51 separateBamBystrand
+################################################################################
+>>> 2023-09-13 15:45:51 separateBamBystrand: start.
+... 2023-09-13 15:45:51 separateBamBystrand: /home/dell/miniconda3/envs/scAPA/bin/samtools view -@ 24 -h -F 0x10 -bS /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.bam > /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam
+... 2023-09-13 15:45:51 separateBamBystrand: command done.
+... 2023-09-13 15:45:51 separateBamBystrand: /home/dell/miniconda3/envs/scAPA/bin/samtools view -@ 24 -h -f 0x10 -bS /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.bam > /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam
+... 2023-09-13 15:45:51 separateBamBystrand: command done.
+... 2023-09-13 15:45:51 separateBamBystrand: /home/dell/miniconda3/envs/scAPA/bin/samtools index -@ 24 /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam
+... 2023-09-13 15:45:51 separateBamBystrand: command done.
+... 2023-09-13 15:45:51 separateBamBystrand: /home/dell/miniconda3/envs/scAPA/bin/samtools index -@ 24 /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam
+... 2023-09-13 15:45:51 separateBamBystrand: command done.
+>>> 2023-09-13 15:45:51 separateBamBystrand: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+inputBam.u.dedup.seps[1]='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam'
+inputBam.u.dedup.seps[2]='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:45:51 findPeaksByStrand
+################################################################################
+>>> 2023-09-13 15:45:51 findPeaksByStrand (+): start.
+... 2023-09-13 15:45:51 findPeaksByStrand: loadBpCoverages on 7 chrs: 2L,2R,3L,3R,4,X,Y
+... 2023-09-13 15:45:58 findPeaks: start regionMatrix (L=49, cutoff=10)...
+... 2023-09-13 15:46:02 findPeaks: chr=Chr2L find 1209 peaks
+... 2023-09-13 15:46:02 findPeaks: chr=Chr2R find 2565 peaks
+... 2023-09-13 15:46:02 findPeaks: chr=Chr3L find 3860 peaks
+... 2023-09-13 15:46:02 findPeaks: chr=Chr3R find 5636 peaks
+... 2023-09-13 15:46:02 findPeaks: chr=Chr4 find 5718 peaks
+... 2023-09-13 15:46:02 findPeaks: chr=ChrX find 7389 peaks
+... 2023-09-13 15:46:02 findPeaks: chr=ChrY find 7412 peaks
+... 2023-09-13 15:46:02 findPeaks: 2617 peaks with width>49nt (Read Length) found on all chrs
+>>> 2023-09-13 15:46:02 findPeaksByStrand: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+forwardPeaksFile='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam.peaks'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>> 2023-09-13 15:46:02 findPeaksByStrand (-): start.
+... 2023-09-13 15:46:02 findPeaksByStrand: loadBpCoverages on 7 chrs: 2L,2R,3L,3R,4,X,Y
+... 2023-09-13 15:46:03 findPeaks: start regionMatrix (L=49, cutoff=10)...
+... 2023-09-13 15:46:06 findPeaks: chr=Chr2L has 1 peaks with width>1000nt, start splitPeaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr2L split 1 wide peaks to 6 small peaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr2L find 972 peaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr2R find 2352 peaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr3L has 1 peaks with width>1000nt, start splitPeaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr3L split 1 wide peaks to 7 small peaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr3L find 3843 peaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr3R find 5407 peaks
+... 2023-09-13 15:46:06 findPeaks: chr=Chr4 find 5656 peaks
+... 2023-09-13 15:46:06 findPeaks: chr=ChrX find 7297 peaks
+... 2023-09-13 15:46:06 findPeaks: chr=ChrY find 7307 peaks
+... 2023-09-13 15:46:06 findPeaks: 2602 peaks with width>49nt (Read Length) found on all chrs
+>>> 2023-09-13 15:46:06 findPeaksByStrand: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+reversePeaksFile='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam.peaks'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:46:06 generateSAF
+################################################################################
+>>> 2023-09-13 15:46:06 generateSAF: start.
+>>> 2023-09-13 15:46:06 generateSAF: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+peaksfile='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/peaks.saf'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:46:06 generateFinalBam
+################################################################################
+>>> 2023-09-13 15:46:06 generateFinalBam: start.
+... 2023-09-13 15:46:06 generateFinalBam: /home/dell/miniconda3/envs/scAPA/bin/featureCounts -a /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/peaks.saf -F SAF -t exon -s 1 -M --largestOverlap -o /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/peak_assigned -R BAM -T 24 /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.bam
+... 2023-09-13 15:46:09 generateFinalBam: command done.
+... 2023-09-13 15:46:09 generateFinalBam: /home/dell/miniconda3/envs/scAPA/bin/samtools sort -@ 24 /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.bam.featureCounts.bam -o /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/final.bam && /home/dell/miniconda3/envs/scAPA/bin/samtools index -@ 24 /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/final.bam
+... 2023-09-13 15:46:15 generateFinalBam: command done.
+>>> 2023-09-13 15:46:15 generateFinalBam: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+final.bam='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/final.bam'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:46:15 countPeaks
+################################################################################
+>>> 2023-09-13 15:46:15 countPeaks: start.
+... 2023-09-13 15:46:15 countPeaks: /home/dell/miniconda3/envs/scAPA/bin/umi_tools count --per-gene --gene-tag=XT --assigned-status-tag=XS --method=unique --extract-umi-method=tag --umi-tag=UB --cell-tag=CB --per-cell -I /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/final.bam -S /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/counts.tsv.gz
+... 2023-09-13 15:47:00 countPeaks: command done.
+>>> 2023-09-13 15:47:00 countPeaks: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+countsfile='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/counts.tsv.gz'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+tailsfile=NULL
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:47:00 generatescExpMa
+################################################################################
+>>> 2023-09-13 15:47:00 generatescExpMa: start.
+... 2023-09-13 15:47:01 generatescExpMa: get peak-cell count matrix.
+... 2023-09-13 15:47:01 reducePeaks: 1968 peaks meet min.count (10).
+... 2023-09-13 15:47:01 reducePeaks: 1657 peaks meet min.cells (10).
+... 2023-09-13 15:47:01 reducePeaks: 1657 peaks (total 5219) meet combined conditions
+... 2023-09-13 15:47:01 generatescExpMa: link peaks.meta and peaks.count.
+... 2023-09-13 15:47:01 generatescExpMa: peaks.meta=5219 peaks; peaks.counts=1657 peaks; common=1657 peaks.
+... 2023-09-13 15:47:01 generatescExpMa: output a list with 1657 peaks.meta (data.frame) and peaks.count (Sparse Matrix).
+>>> 2023-09-13 15:47:01 generatescExpMa: finish.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+outputfile='/mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/scAPAtrapData.rda'
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################################
+2023-09-13 15:47:01 All output files in running order
+################################################################################
+Files marked with * can be savely deleted!
+               *findUniqueMap: samtools sort ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.bam
+              *findUniqueMap: samtools index ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.bam.bai
+                 *dedupByPos: umitools dedup ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.bam
+  *separateBamBystrand: samtools forward BAM ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam
+  *separateBamBystrand: samtools reverse BAM ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam
+*separateBamBystrand: samtools forward index ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam.bai
+*separateBamBystrand: samtools reverse index ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam.bai
+                *findPeaksByStrand: peak (+) ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.forward.bam.peaks
+                *findPeaksByStrand: peak (-) ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.UniqSorted.dedup.reverse.bam.peaks
+                       generateSAF peaks.saf ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/peaks.saf
+        *generateFinalBam: featureCounts log ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/peak_assigned
+        *generateFinalBam: featureCounts BAM ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/fly_demo.bam.featureCounts.bam
+            *generateFinalBam: samtools sort ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/final.bam
+                 countPeaks: umitools counts ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/counts.tsv.gz
+              generatescExpMa: scAPAtrapData ==> /mnt/64cf3476-350c-46ad-bc48-574fa64a0334/test/xwu/demoFly/APA.notails.onestep/scAPAtrapData.rda
