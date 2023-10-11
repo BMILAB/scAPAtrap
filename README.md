@@ -33,27 +33,42 @@ Three main datasets used in this study:
 * Arabidopsis roots ([GSE123013](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE123013))
 * Mouse intestinal organoids ([GSE62270](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE62270))
 
-Lists of poly(A) sites with full genome annotation identified by scAPAtrap were placed in the [Result](https://github.com/BMILAB/scAPAtrap/tree/master/Result) folder.
+Lists of poly(A) sites with full genome annotation identified by scAPAtrap were placed in the [Result](https://github.com/BMILAB/scAPAtrap/tree/refer/Result) folder.
 
 ## Installing
 ```
 install.packages('devtools')
-devtools::install_github("BMILAB/scAPAtrap",build_vignettes = TRUE)
+devtools::install_github("BMILAB/scAPAtrap")
 ```
 
-Note, due to the problem of the devtools version, there may be no build_vignettes parameter, you can use the following command to download scAPAtrap.
+Or you may download the package and install locally.
 ```
-devtools::install_github("BMILAB/scAPAtrap", build_opts = c("--no-resave-data", "--no-manual"))
+devtools::install_local("your_path_of_scAPAtrap-master.zip", build_vignettes = TRUE)
+```
+
+When the package is installed,  you can browse the vignette using the following command on the R console.
+browseVignettes('scAPAtrap')
 ```
 
 ## Application examples
-### Identification and quantification of poly(A) sites 
-In this case study, we investigated the application of scAPAtrap on identifying and quantifying poly(A) sites from mouse spermatogenesis scRNA-seq data. Please refer to the vignette ([scAPAtrap.html](http://www.bmibig.cn/mnt/scAPAtrap/Tutorial/scAPAtrap.html)) for full details.
 
+### Identification and quantification of poly(A) sites 
+[scAPAtrap_tutorial](https://github.com/BMILAB/scAPAtrap/blob/master/inst/doc/scAPAtrap_tutorial.html) describes two ways of running scAPAtrap: one-step and step-by-step. 
+
+You can also browse the vignette using the following command on the R console
 ```
-## You can also browse the vignette using the following command on the R console.
-browseVignettes('scAPAtrap')
+vignette("scAPAtrap_tutorial", package = "scAPAtrap")
 ```
+
+### Analyze APA results from scAPAtrap with the movAPA package
+This documentation describes how to read an external file of poly(A) sites and analyze it with movAPA. We used the model species – Arabidopsis for demonstration.
+Please refer to the vignette ([PDF](https://github.com/BMILAB/movAPA/blob/master/inst/doc/movAPA_data_input.pdf), [HTML]( https://bmilab.github.io/movAPA/vignettes/movAPA_data_input.html)) for full details. 
+
+You can also browse the vignette using the following command on the R console
+```
+vignette("movAPA_on_scAPAtrap_results", package = "scAPAtrap")
+```
+
 ### Comparions with other tools 
 Here we adopted the mouse sperm scRNA-seq dataset to evaluate the performance of scAPAtrap and compared the results with other two tools, scAPA (Shulman et al, 2019) and Sierra (Patrick, et al., 2020). We have used scAPAtrap, scAPA, and Sierra to identify poly(A) sites from the mouse sperm scRNA-seq data, respectively. The identified poly(A) sites stored in Rdata files can be downloaded [here](http://www.bmibig.cn/mnt/scAPAtrap/ScPACdsData/). Please refer to the vignette ([scAPAtrap_compare.html](http://www.bmibig.cn/mnt/scAPAtrap/Tutorial/scAPAtrap_compare.html)) for full details.
 
