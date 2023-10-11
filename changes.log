@@ -1,0 +1,16 @@
+2023/10/11
+Update LOG scAPAtrap v0.2.0:
+# Fix a bug in findPeaks: previously, when no peaks wider than maxwidth, will not output small peaks.
+# Add function findPeaksByStrand, which combines previous loadBpCoverages and findPeaks.
+# Add wrapper function scAPAtrap for one step running.
+# Add initScAPAtrap and demo script for step by step run of scAPAtrap.
+# Add neat LOG and message.
+# Add function findTails (genome-wide searching) and findTailsByPeaks (peaks-wide searching) to find tails independently.
+# Add function reducePeaks to remove lowly expressed peaks, which can be called before searching tails or output.
+# Add function convertAPAtrapData to convert scAPAtrapData (a list) to other objects incuding PACdataset, SeurateObject, SingleCellExperiment.
+# Update function generatescExpMa to allow tail=NULL for not searching tails of peaks; output a list containing sparseMatrix for bigger data.
+# More flexible parameter settings (TRAP.PARAMS): allowing flexible chrs, barcode, tails.
+# Add global variable TRAPFILES to record output files in scAPAtrap.
+# Add vignette <movAPA_on_scAPAtrap_results> and <scAPAtrap_tutorial>.
+
+
