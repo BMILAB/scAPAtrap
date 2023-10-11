@@ -1,4 +1,4 @@
-# scAPAtrap
+# scAPAtrap v0.2.0 (released on 2023/10/11)
 # Identification and quantification of alternative polyadenylation sites from single-cell RNA-seq data
 
 ## Introduction
