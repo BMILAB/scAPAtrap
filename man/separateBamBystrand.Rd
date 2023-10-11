@@ -2,25 +2,36 @@
 % Please edit documentation in R/scAPAtrap_funlib.R
 \name{separateBamBystrand}
 \alias{separateBamBystrand}
-\title{Separate BAM files according to strand}
+\title{Separate BAM files by strand}
 \usage{
-separateBamBystrand(samtools.path, input, thread)
+separateBamBystrand(samtools.path, input, thread = 12, ...)
 }
 \arguments{
-\item{samtools.path}{The path of the samtools}
+\item{samtools.path}{The path of the samtools.}
 
-\item{input}{BAM file}
+\item{input}{The BAM file name.}
 
-\item{thread}{Number of threads}
+\item{thread}{Number of CPU threads, default is 12.}
+
+\item{...}{Arguments passed to other methods and/or advanced arguments.
+Advanced arguments:
+\describe{
+\item{verbose }{If `TRUE` basic status updates will be printed along the way.}
+\item{logf }{If not NULL, then it should be a character string denoting a file name. Then message will be written to `logf`.}
+\item{notRun }{Default is FALSE. If `TRUE`, the Shell commands inside this function will not run but output the commad line.}
+}}
 }
 \value{
-String vector, the path of the forward BAM file and the reverse BAM file generated after separating the BAM
+String vector storing the path of the forward BAM file (<input>.forward.bam) and the reverse BAM file (<input>.reverse.bam)
 }
 \description{
-Separate BAM files according to strand
+Separate BAM files by strand
 }
 \examples{
 samtools.path <- '/home/aa/miniconda2/envs/nar_env/bin/samtools'
 input <- './data/demo.Uniq.sorted.dedup.bam'
+\dontrun{
 separateBamBystrand(samtools.path,input,24)
+}
+separateBamBystrand(samtools.path,input,24, notRun=TRUE)
 }

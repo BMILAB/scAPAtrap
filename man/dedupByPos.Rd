@@ -2,25 +2,36 @@
 % Please edit documentation in R/scAPAtrap_funlib.R
 \name{dedupByPos}
 \alias{dedupByPos}
-\title{Deduplication according to the comparison position}
+\title{Deduplication with umitools}
 \usage{
-dedupByPos(umitools.path, input, TenX = T)
+dedupByPos(umitools.path, input, TenX = TRUE, ...)
 }
 \arguments{
-\item{umitools.path}{The path of the umi_tools}
+\item{umitools.path}{The path of the umi_tools.}
 
-\item{input}{BAM file,but need index files}
+\item{input}{A BAM file which needs the index file.}
 
-\item{TenX}{Logical value. Is it 10x data?}
+\item{TenX}{Logical value, TRUE for 10X data.}
+
+\item{...}{Arguments passed to other methods and/or advanced arguments.
+Advanced arguments:
+\describe{
+\item{verbose }{If `TRUE` basic status updates will be printed along the way.}
+\item{logf }{If not NULL, then it should be a character string denoting a file name. Then message will be written to `logf`.}
+\item{notRun }{Default is FALSE. If `TRUE`, the Shell commands inside this function will not run but output the commad line.}
+}}
 }
 \value{
-Output path of the calculated BAM file
+Output path of the deduplicated BAM file (<input>.dedup.bam).
 }
 \description{
-Deduplication according to the comparison position
+Deduplication with umitools
 }
 \examples{
 umitools.path <- '/home/aa/miniconda2/envs/umi_tools/bin/umi_tools'
 input <- './data/demo.Uniq.sorted.bam'
-dedupByPos(umitools.path,input)
+\dontrun{
+dedupByPos(umitools.path, input)
+}
+dedupByPos(umitools.path, input, notRun=TRUE)
 }

@@ -2,27 +2,39 @@
 % Please edit documentation in R/scAPAtrap_funlib.R
 \name{generateRefIndex}
 \alias{generateRefIndex}
-\title{Construct reference genome index}
+\title{Build the reference genome index with STAR}
 \usage{
-generateRefIndex(star.path, genome.fasta, indexdir, thread)
+generateRefIndex(star.path, genome.fasta, indexdir, thread = 12, ...)
 }
 \arguments{
-\item{star.path}{The path of the star.path}
+\item{star.path}{The path of the STAR.}
 
-\item{genome.fasta}{Reference genome sequence, fasta format}
+\item{genome.fasta}{The reference genome sequence file in fasta format.}
 
-\item{indexdir}{Directory of Reference Genome Index}
+\item{indexdir}{Directory of the reference genome index.}
 
-\item{thread}{Number of threads}
+\item{thread}{Number of CPU threads, default is 12.}
+
+\item{...}{Arguments passed to other methods and/or advanced arguments.
+Advanced arguments:
+\describe{
+\item{verbose }{If `TRUE` basic status updates will be printed along the way.}
+\item{logf }{If not NULL, then it should be a character string denoting a file name. Then message will be written to `logf`.}
+\item{notRun }{Default is FALSE. If `TRUE`, the Shell commands inside this function will not run but output the commad line.}
+}}
 }
 \value{
-Directory of Reference Genome Index
+Directory of reference genome index
 }
 \description{
-Construct reference genome index
+Build the reference genome index with STAR
 }
 \examples{
+star.path='/home/dell/miniconda3/envs/scAPA/bin/STAR'
 genome.fasta <- '/home/aa/genome_data/mm10/Mus_musculus.GRCm38.dna.primary_assembly.fa'
 indexdir <- './mm10_index/'
-generateRefIndex(star.path,genome.fasta,indexdir,24)
+\dontrun{
+generateRefIndex(star.path, genome.fasta, indexdir, 24)
+}
+generateRefIndex(star.path, genome.fasta, indexdir, 24, notRun=TRUE)
 }

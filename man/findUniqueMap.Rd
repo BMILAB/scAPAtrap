@@ -2,29 +2,49 @@
 % Please edit documentation in R/scAPAtrap_funlib.R
 \name{findUniqueMap}
 \alias{findUniqueMap}
-\title{Filter the BAM file to preserve the unique comparison results}
+\title{Filter a BAM file to preserve unique mappings with samtools}
 \usage{
-findUniqueMap(samtools.path, input, thread, sort = T, index = T)
+findUniqueMap(
+  samtools.path,
+  input,
+  thread = 12,
+  sort = TRUE,
+  index = TRUE,
+  ...
+)
 }
 \arguments{
-\item{samtools.path}{The path of the samtools}
+\item{samtools.path}{The path of the samtools.}
 
-\item{input}{BAM file}
+\item{input}{BAM file name.}
 
-\item{thread}{Number of threads}
+\item{thread}{Number of CPU threads, default is 12.}
 
-\item{sort}{Logical value, whether to sort}
+\item{sort}{Logical value, TRUE to sort the BAM file.}
 
-\item{index}{Logical value, whether or not to build the index}
+\item{index}{Logical value, TRUE to build the index.}
+
+\item{...}{Arguments passed to other methods and/or advanced arguments.
+Advanced arguments:
+\describe{
+\item{verbose }{If `TRUE` basic status updates will be printed along the way.}
+\item{logf }{If not NULL, then it should be a character string denoting a file name. Then message will be written to `logf`.}
+\item{notRun }{Default is FALSE. If `TRUE`, the Shell commands inside this function will not run but output the commad line.}
+}}
 }
 \value{
-Output path of the calculated BAM file
+Output path of the new BAM file name with only unique mapped reads (<input>.uniq.bam or UniqSorted.bam if sort=TRUE).
 }
 \description{
-Filter the BAM file to preserve the unique comparison results
+findUniqueMap filters a BAM file to preserve unique mappings with samtools. This function will generate .bam (<input>.uniq.bam or UniqSorted.bam if sort=TRUE) and .bai (if index=TRUE).
+Suffix .Uniq or .UniqSorted will be added to the input BAM file. This function is the same as call samtools in Shell.
 }
 \examples{
 samtools.path <- '/home/aa/miniconda2/envs/nar_env/bin/samtools'
 input <- './data/demo.bam'
-findUniqueMap(samtools.path,input,24)
+\dontrun{
+findUniqueMap(samtools.path, input, 24)
+}
+## only output command lines
+findUniqueMap(samtools.path, input, 24, notRun=TRUE)
 }

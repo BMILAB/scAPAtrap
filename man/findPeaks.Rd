@@ -2,25 +2,37 @@
 % Please edit documentation in R/scAPAtrap_funlib.R
 \name{findPeaks}
 \alias{findPeaks}
-\title{Perform peak calling on a BAM file produced from a scRNA-seq experiment}
+\title{Perform peak calling on a BAM file}
 \usage{
-findPeaks(fullCov, Strand, L, maxwidth, cutoff = 0)
+findPeaks(fullCov, strand, L, maxwidth, cutoff = 10, ...)
 }
 \arguments{
-\item{fullCov}{The output of loadBpCoverages}
+\item{fullCov}{The output of loadBpCoverages.}
 
-\item{L}{Sequence length}
+\item{strand}{strand.}
 
-\item{maxwidth}{Maximum peak width}
+\item{L}{Read length, used to filter peaks wider than L.}
 
-\item{cutoff}{The base-pair level cutoff to use}
+\item{maxwidth}{Maximum peak width, used to filter peaks narrower than maxwidth. Wider peaks will be splitted to smaller ones.}
 
-\item{strand}{strand}
+\item{cutoff}{The base level coverage cutoff to filter valid peaks with enough coverages, default is 10.}
+
+\item{...}{Arguments passed to other methods and/or advanced arguments.
+Advanced arguments:
+\describe{
+\item{verbose }{If `TRUE` basic status updates will be printed along the way.}
+\item{logf }{If not NULL, then it should be a character string denoting a file name. Then message will be written to `logf`.}
+}}
+}
+\value{
+A data frame with five columns: chr/start/end/strand/value, with each row being a peak. The value column is the average coverage of peak.
 }
 \description{
-Perform peak calling on a BAM file produced from a scRNA-seq experiment
+Perform peak calling on a BAM file with single strand (+ or -) using the output of loadBpCoverages. It is recommended to use findPeaksByStrand instead.
 }
 \examples{
-forwardPeaks <-findPeaks(fullcovF,'+',98,1000)
-reversePeaks <-findPeaks(fullcovR,'-',98,1000)
+\dontrun{
+forwardPeaks <-findPeaks(fullcovF, '+', 98, 1000)
+reversePeaks <-findPeaks(fullcovR, '-', 98, 1000)
+}
 }

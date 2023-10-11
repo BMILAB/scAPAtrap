@@ -2,26 +2,38 @@
 % Please edit documentation in R/scAPAtrap_funlib.R
 \name{generateAlignBam}
 \alias{generateAlignBam}
-\title{Align the sequence to the reference genome}
+\title{Align the sequence to the reference genome with STAR}
 \usage{
-generateAlignBam(star.path, indexdir, input.seq, prefix, thread)
+generateAlignBam(star.path, indexdir, input.seq, prefix, thread = 12, ...)
 }
 \arguments{
-\item{star.path}{The path of the star.path}
+\item{star.path}{The path of the STAR.}
 
-\item{indexdir}{Directory of Reference Genome Index}
+\item{indexdir}{Directory of reference genome index.}
 
-\item{prefix}{The prefix of the output file name}
+\item{input.seq}{Input fastq file.}
 
-\item{thread}{Number of threads}
-}
-\value{
-The path of the bam file generated after alignment
+\item{prefix}{The prefix of the output file name.}
+
+\item{thread}{Number of CPU threads, default is 12.}
+
+\item{...}{Arguments passed to other methods and/or advanced arguments.
+Advanced arguments:
+\describe{
+\item{verbose }{If `TRUE` basic status updates will be printed along the way.}
+\item{logf }{If not NULL, then it should be a character string denoting a file name. Then message will be written to `logf`.}
+\item{notRun }{Default is FALSE. If `TRUE`, the Shell commands inside this function will not run but output the commad line.}
+}}
 }
 \description{
-Align the sequence to the reference genome
+Align the sequence to the reference genome with STAR
 }
 \examples{
+star.path='/home/dell/miniconda3/envs/scAPA/bin/STAR'
+indexdir <- "./"
 input.seq <- 'SRR1610598_2.extracted.fastq'
-generateAlignBam(star.path,indexdir,input.seq,'./BAM/rep1',12)
+\dontrun{
+generateAlignBam(star.path, indexdir, input.seq, prefix='./BAM/rep1',12)
+}
+generateAlignBam(star.path, indexdir, input.seq, prefix='./BAM/rep1', notRun=TRUE)
 }

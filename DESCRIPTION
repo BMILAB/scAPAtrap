@@ -1,36 +1,27 @@
 Package: scAPAtrap
 Type: Package
 Title: Identification and Quantification of Alternative Polyadenylation Sites from Single-cell RNA-seq Data
-Version: 0.1.0
-Author: Tao Liu
-Maintainer: Tao Liu <liwen199527@163.com>
-Description: Identification and Quantification of Alternative Polyadenylation Sites from Single-cell RNA-seq data
-    scAPAtrap
-Depends: 
-    R (>= 3.5.3),
-    dplyr,
-    reshape2,
-    GenomicRanges,
-    GenomicAlignments,
-    derfinder,
-    bumphunter,
-    regioneR,
-    Rsamtools
+Version: 0.2.0
+Author: Tao Liu, Xiaohui Wu
+Maintainer: Xiaohui Wu <xhwu@suda.edu.cn>
+Description: scAPAtrap is used for the identification and quantification of polyadenylation sites from single-cell RNA-seq data.
+Depends: R (>= 3.5.3)
 License: GPL
 Encoding: UTF-8
-LazyData: true
-Date: 2020-07-25
-RoxygenNote: 7.1.1
-Imports: 
-    dplyr,
-    reshape2,
-    GenomicRanges,
-    GenomicAlignments,
-    derfinder,
-    bumphunter,
-    regioneR,
-    Rsamtools
-Suggests: 
-    knitr,
-    rmarkdown
+Date: 2023-09-10
+RoxygenNote: 7.2.2
+Imports: GenomicRanges, IRanges, reshape2, dplyr, Matrix, GenomicAlignments, derfinder, bumphunter, regioneR, Rsamtools, magrittr
+Suggests: Seurat, SingleCellExperiment, movAPA, knitr
 VignetteBuilder: knitr
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: scAPAtrap
+RemoteUsername: BMILAB
+RemoteRef: HEAD
+RemoteSha: 12ee8f5df34fbe81642fe8564132e3f847f93132
+GithubRepo: scAPAtrap
+GithubUsername: BMILAB
+GithubRef: HEAD
+GithubSHA1: 12ee8f5df34fbe81642fe8564132e3f847f93132
+NeedsCompilation: no
+Packaged: 2023-09-13 01:03:10 UTC; LENOVO
