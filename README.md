@@ -62,6 +62,89 @@ You can also browse the vignette using the following command on the R console
 vignette("movAPA_on_scAPAtrap_results", package = "scAPAtrap")
 ```
 
+## Recommended strategy for processing scAPAtrap results
+scAPAtrap identifies poly(A) sites through two modes: calling peaks based on change points and finding tails based on soft-clipping. Based on our experience, we recommend the following approach to merge the results from the two modes to obtain a more accurate poly(A) site list.
+```
+library(movAPA)
+library(BSgenome.Mmusculus.UCSC.mm10)
+
+#When setting `tails.search='no'`, the path of the final output file(scAPAtrapData.rda)
+pafile=paste0(file.path,"/APA.notails/scAPAtrapData.rda")
+load(pafile)
+#Load the data into the PACdataset object of movAPA
+scPACds=createPACdataset(counts=scAPAtrapData$peaks.count, anno=scAPAtrapData$peaks.meta)
+scPACds@colData$barcode<-row.names(scPACds@colData)
+scPACds@colData<- subset(scPACds@colData, select= barcode)
+
+#When setting `tails.search=''genome'`, the path of the final output file(scAPAtrapData.rda)
+pafile=paste0(file.path,"/APA.tails/scAPAtrapData.rda")
+load(pafile)
+#Load the data into the PACdataset object of movAPA
+sub_scPACds=createPACdataset(counts=scAPAtrapData$peaks.count, anno=scAPAtrapData$peaks.meta)
+sub_scPACds@colData$barcode<-row.names(sub_scPACds@colData)
+sub_scPACds@colData<- subset(sub_scPACds@colData, select= barcode)
+ 
+#Filter pAs by main chrs
+chrs=paste0("chr",c(as.character(1:19),"X","Y")) #mouse
+scPACds=subsetPACds(scPACds,chrs=chrs,minExprConds = 0,verbose =T)
+sub_scPACds=subsetPACds(sub_scPACds,chrs=chrs,minExprConds = 0,verbose =T)
+
+#Remove internal priming
+##First, for all pAs, remove those pAs where there six continuous As within 140 nt upstream and 10 nt downstream
+
+##mouse:BSgenome.Mmusculus.UCSC.mm10/human:BSgenome.Hsapiens.UCSC.hg38
+bsgenome=BSgenome.Mmusculus.UCSC.mm10
+scPACds =removePACdsIP(scPACds , bsgenome, returnBoth=FALSE, up=-140, dn=10, conA=6, sepA=NA,chrCheck = FALSE)
+    
+scPACds@anno$PA_id=paste0(scPACds@anno$chr,":",scPACds@anno$strand,":",scPACds@anno$coord)
+sub_scPACds@anno$PA_id=paste0(sub_scPACds@anno$chr,":",sub_scPACds@anno$strand,":",sub_scPACds@anno$coord)
+    
+info=intersect(scPACds@anno$PA_id,sub_scPACds@anno$PA_id)
+sub_scPACds@anno=sub_scPACds@anno[sub_scPACds@anno$PA_id %in% info,]
+sub_scPACds@counts=sub_scPACds@counts[row.names(sub_scPACds@anno),]
+
+scPACds@anno$pa.tails="no.tail"
+loc=match(sub_scPACds@anno$PA_id,scPACds@anno$PA_id)
+scPACds@anno$pa.tails[loc]="tail"
+
+##Next, retain the pAs that are supported by the poly(A) tail or have a higher expression level 
+##Here, for 3'UTR pAs that are not supported by the poly(A) tail, retain those pAs for which the total expression level is greater than 55% of those 3'UTR pAs that are supported by the poly(A) tail. 
+
+##Note:You can determine which level of expression for the 3'UTR pAs to retain based on the actual conditions
+
+scPACds@anno$count=Matrix::rowSums(scPACds@counts)
+    
+##Annotate pAs to distinguish 3'UTR pAs
+reference.file <- "G:/ref_file/GRcm38fa+gtf/genecode/gencode.vM25.annotation.gtf"#mouse
+gff=makeTxDbFromGFF(reference.file , format="gtf")
+gff<-parseGenomeAnnotation(gff)    
+scPACds<- annotatePAC(scPACds,gff)
+scPACds<- ext3UTRPACds(scPACds,ext3UTRlen =2000,extFtr='3UTR')
+
+data=subset(scPACds@anno,scPACds@anno$ftr=="3UTR")
+tail.data=subset(data,data$pa.tails=="tail")
+#notail.data=subset(data,data$pa.tails=="no.tail") 
+    
+sub_count=tail.data$count
+sub_count=sort(sub_count)
+count4=quantile(sub_count,probs=0.25,names=FALSE)
+count3=quantile(sub_count,probs=0.50,names=FALSE)
+count2=quantile(sub_count,probs=0.55,names=FALSE)
+count1=quantile(sub_count,probs=0.60,names=FALSE)
+
+scPACds@anno <-  scPACds@anno %>%
+      mutate(count.group = case_when(
+        count >count1 ~"count.rank1",
+        count > count2 & count <= count1 ~ "count.rank2",
+        count > count3 & count <= count2 ~ "count.rank3",
+        count > count4 & count <= count3 ~ "count.rank4",
+        count <=count4 ~"count.rank5"))
+    
+scPACds@anno=subset(scPACds@anno,scPACds@anno$pa.tails=="tail" | scPACds@anno$count.group %in% c("count.rank1","count.rank2"))
+scPACds@counts=scPACds@counts[row.names(scPACds@anno),]
+
+```
+
 ## Analysis in the BiB paper
 ### Data
 Three main datasets used in this study:
